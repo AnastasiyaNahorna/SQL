@@ -1,5 +1,5 @@
-### Steps
-#### Table 1. *'employees'*.
+## Steps
+### Table 1. *'employees'*.
 1. Create table `employees` with the following columns:
 - id serial, primary key,
 - employee_name varchar(50), not null.
