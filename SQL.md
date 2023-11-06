@@ -1,5 +1,12 @@
-# Steps
-# Table 1. *'employees'*.
+## SQL
+### homework_1
+This homework is mostly about creating & modifying tables, as well as inserting the necessary data. This data is needed to be used in other homeworks. </br>
+_Note: as I had to insert a lot of data, sometimes I used some hacks like:_
+- _code blocks,_
+- _making arrays and unnesting them_.
+
+### Steps
+#### Table 1. *'employees'*.
 1. Create table `employees` with the following columns:
 - id serial, primary key,
 - employee_name varchar(50), not null.
@@ -166,3 +173,7 @@ begin
 	end loop;
 end $$;
 ```
+
+
+
+
