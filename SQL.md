@@ -1,12 +1,7 @@
-## SQL
-### homework_1
-This homework is mostly about creating & modifying tables, as well as inserting the necessary data. This data is needed to be used in other homeworks. </br>
-_Note: as I had to insert a lot of data, sometimes I used some hacks like:_
-- _code blocks,_
-- _making arrays and unnesting them_.
+## <a id="section-1"></a> SQL
 
-### Steps
-#### Table 1. *'employees'*.
+### <a id="section-1"></a> Steps
+#### <a id="section-1"></a> Table 1. *'employees'*.
 1. Create table `employees` with the following columns:
 - id serial, primary key,
 - employee_name varchar(50), not null.
@@ -18,24 +13,14 @@ create table employees(
 );
 ```
 2. Fill the table with 70 records (rows). </br>
-It is obvious that we would add 70 names to the employee_name column. To make it faster, I did the following:
-- generated 70 names on one of appropriate websites and downloaded a .csv file,
-- modified the list of those to an array
-- added this array to values with an `unnest`
+- generate 70 names on one of appropriate websites and downloaded a .csv file,
+- modify the list of those to an array
+- add this array to values with an `unnest`
 ```postgresql
 insert into employees(employee_name)
 select unnest (array['Charlotte','Aiden','Elian','Adelaide','Penelope','Mike','Connie','Stuart','Brooke','Oscar','Roland','Victor','Deanna','Honey','Justin','George','Max','Tiana','Vincent','James','Alina','Aida','Bruce','Dale','Amy','Sydney','Maria','Martin','Jessica','Frederick','Maya','Sabrina','Aston','Amanda','Brianna','Rubie','Florrie','Stuart','Clark','Adison','Agata','Lyndon','Alisa','Tyler','Alexander','Natalie','Aldus','Sarah','Vincent','Melanie','Abraham','Honey','Lucas','Blake','Garry','Arianna','Kelsey','Lana','Darcy','Emily','Marcus','Robert','Edgar','Vanessa','Catherine','Sabrina','Frederick','Jordan','Tyler','Adelaide']);
 ```
-Another option -  we can still use the insert in its classic form:
-```postgresql
-insert into employees(employee_name)
-values ( -- then we can manually add those 70 values from above, example with 3 names below:
-        'Charlotte',
-        'Aiden',
-        'Elian' 
-       );
-```
-#### Table 2. *'salary'*.
+#### <a id="section-1"></a> Table 2. *'salary'*.
 3. Create table `salary` with the following columns:
 - id serial, primary key,
 - monthly_salary int, not null.
@@ -46,7 +31,7 @@ create table salary(
 );
 ```
 4. Fill the table with 15 records (1000, 1100 ... 2500). </br>
-Here, I wrote a block code with a loop:
+-a loop:
 ```postgresql
 do $$
 begin
@@ -57,7 +42,7 @@ begin
 	end loop;
 end $$;
 ```
-#### Table 3. *'employee_salary'*.
+#### <a id="section-1"></a> Table 3. *'employee_salary'*.
 5. Create table `employee_salary` with the following columns:
 - id serial, primary key,
 - employee_id int, not null, unique,
@@ -72,8 +57,8 @@ create table employee_salary(
 ```
 6. Fill the table with 40 records (10 rows of 40 must be with non-existing employee IDs).</br>
 **Step 1:** </br>
-I decided to take the first 30 IDs from `employees` table to and randomly choose one out of 16 IDs from `salary` table. </br>
-I used a block code `do` and a `for` loop to insert the data to employee_id and salary_id of the `employee_salary` table. </br>
+-take the first 30 IDs from `employees` table to and randomly choose one out of 16 IDs from `salary` table. </br>
+-use a block code `do` and a `for` loop to insert the data to employee_id and salary_id of the `employee_salary` table. </br>
 ```postgresql
 do $$
 declare
@@ -89,16 +74,15 @@ begin
 	end loop;
 end $$;
 ```
-As a result, we have `employee_salary` table with 30 records, where employee_id values are from 1 to 30 and salary_id column values from 1 to 16. </br>
-_Note: in case of having more than 16 salary IDs in `salary` table, this code will also work, that's why I decided to find maximum value of salary ID. </br>_
+-`employee_salary` table with 30 records, where employee_id values are from 1 to 30 and salary_id column values from 1 to 16. </br>
 
 **Step 2:** </br>
-What about the rest of 10 records? </br>
-Here, to be simpler, I chose specific values range (from 200 to 209) for non-existent employee IDs and only one value for salary_id (1).
+-the rest of 10 records? </br>
+-specific values range (from 200 to 209) for non-existent employee IDs and only one value for salary_id (1).
 ```postgresql
 insert into employee_salary(employee_id, salary_id) values(generate_series(200, 209), 1);
 ```
-#### Table 4. *'roles'*.
+#### <a id="section-1"></a> Table 4. *'roles'*.
 7. Create table `roles` with the following columns:
 - id serial, primary key,
 - role_name int, not null, unique.
@@ -139,12 +123,12 @@ alter column role_name type varchar(30);
 | 19  | Middle Automation QA engineer          |
 | 20  | Senior Automation QA engineer          |
 
-In this case, we could insert the values manually, but my option is making an array and add the array elements to the column:
+-make an array and add the array elements to the column:
 ```postgresql
 insert into roles(role_name)
 select unnest(array['Junior Python developer', 'Middle Python developer', 'Senior Python developer', 'Junior Java developer', 'Middle Java developer', 'Senior Java developer', 'Junior JavaScript developer', 'Middle JavaScript developer', 'Senior JavaScript developer', 'Junior Manual QA engineer', 'Middle Manual QA engineer', 'Senior Manual QA engineer', 'Project Manager', 'Designer', 'HR', 'CEO', 'Sales manager', 'Junior Automation QA engineer', 'Middle Automation QA engineer', 'Senior Automation QA engineer']);
 ```
-#### Table 5. *'roles_employee'*.
+#### <a id="section-1"></a> Table 5. *'roles_employee'*.
 10. Create table `roles_employee` with the following columns:
 - id serial, primary key,
 - employee_id int, not null, unique (foreign key for 'id' column of the `employees` table),
@@ -157,7 +141,7 @@ create table roles_employee(
 );
 ```
 11. Fill the table with 40 records:
-I also used 'do' block code to insert data. Took this data from other tables:
+use 'do' block code to insert data. Took this data from other tables:
 ```postgresql
 do $$
 declare
@@ -173,7 +157,6 @@ begin
 	end loop;
 end $$;
 ```
-
 
 
 
